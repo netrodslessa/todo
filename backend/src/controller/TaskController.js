@@ -5,7 +5,9 @@ const {
   startOfWeek,
   endOfWeek,
   startOfYear,
-  endOfYear
+  endOfYear,
+  startOfMonth,
+  endOfMonth
 } = require('date-fns')
 
 const current = new Date();
@@ -152,6 +154,26 @@ class TaskController {
       })
       .catch(error => {
         return res.status(500).json(error);
+      })
+  }
+
+  async month(req, res) {
+    await TaskModel
+      .find({
+        'macaddress': {
+          '$in': req.body.macaddress
+        },
+        'when': {
+          '$gte': startOfMonth(current),
+          '$lte': endOfMonth(current)
+        }
+      })
+      .sort('when')
+      .then(response => {
+        return res.status(200).json(response);
+      })
+      .catch(error => {
+        res.status(500).json(error);
       })
   }
 
