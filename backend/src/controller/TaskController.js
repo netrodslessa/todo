@@ -4,10 +4,10 @@ const {
   endOfDay,
   startOfWeek,
   endOfWeek,
-  startOfYear,
-  endOfYear,
   startOfMonth,
-  endOfMonth
+  endOfMonth,
+  startOfYear,
+  endOfYear
 } = require('date-fns')
 
 const current = new Date();
