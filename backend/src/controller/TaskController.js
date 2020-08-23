@@ -1,5 +1,5 @@
 const TaskModel = require('../model/TaskModel');
-const {startOfDay, endOfDay} = require('date-fns')
+const {startOfDay, endOfDay, startOfWeek, endOfWeek} = require('date-fns')
 
 const current = new Date();
 
@@ -117,6 +117,21 @@ class TaskController {
           .catch(error => {
             return res.status(500).json(error);
           });
+  }
+
+  async week(req, res){
+    await TaskModel
+          .find({
+            'macaddress': {'$in': req.body.macaddress},
+            'when': {'$gte': startOfWeek(current), '$lte': endOfWeek(current)}  
+          })
+          .sort('when')
+          .then(response => {
+            return res.status(200).json(response);
+          })
+          .catch(error => {
+            return res.status(500).json(error);
+          })
   }
 
 };
