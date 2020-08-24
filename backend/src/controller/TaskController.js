@@ -14,7 +14,7 @@ const current = new Date();
 
 class TaskController {
 
-  async create(req, res) {
+  async create(req, res) { 
     const task = new TaskModel(req.body);
     await task
       .save()
@@ -43,7 +43,7 @@ class TaskController {
   async all(req, res) {
     await TaskModel.find({
         macaddress: {
-          '$in': req.body.macaddress
+          '$in': req.params.macaddress
         }
       })
       .sort('when')
@@ -105,7 +105,7 @@ class TaskController {
           '$lt': current
         },
         'macaddress': {
-          '$in': req.body.macaddress
+          '$in': req.params.macaddress
         }
       })
       .sort('when')
@@ -121,7 +121,7 @@ class TaskController {
     await TaskModel
       .find({
         'macaddress': {
-          '$in': req.body.macaddress
+          '$in': req.params.macaddress
         },
         'when': {
           '$gte': startOfDay(current),
@@ -141,7 +141,7 @@ class TaskController {
     await TaskModel
       .find({
         'macaddress': {
-          '$in': req.body.macaddress
+          '$in': req.params.macaddress
         },
         'when': {
           '$gte': startOfWeek(current),
@@ -161,7 +161,7 @@ class TaskController {
     await TaskModel
       .find({
         'macaddress': {
-          '$in': req.body.macaddress
+          '$in': req.params.macaddress
         },
         'when': {
           '$gte': startOfMonth(current),
@@ -181,7 +181,7 @@ class TaskController {
     await TaskModel
       .find({
         'macaddress': {
-          '$in': req.body.macaddress
+          '$in': req.params.macaddress
         },
         'when': {
           '$gte': startOfYear(current),
