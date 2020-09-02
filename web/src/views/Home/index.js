@@ -13,6 +13,7 @@ import TaskCard from '../../components/TaskCard'
 function Home() {
   const [filterActived, setFilterActived] = useState('today');
   const [tasks, setTasks] = useState([]);
+  const [lateCount, setLateCount]= useState()
 
   async function loadTasks(){
     await api.get(`/task/filter/${filterActived}/11:11:11:11:11:11`)
@@ -21,14 +22,26 @@ function Home() {
      })
   }
 
+  async function lateVerify(){
+    await api.get(`/task/filter/late/11:11:11:11:11:11`)
+      .then(response => {
+        setLateCount(response.data.length)
+      })
+  }
+
+  function Notification(){
+    setFilterActived('late');
+  }
+
   useEffect(()=>{
     loadTasks();
+    lateVerify();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterActived])
 
   return (
     <S.Container >
-      <Header />
+      <Header lateCount={lateCount} clickNotification={Notification}/>
 
       <S.FilterArea>
         <button type="button"         onClick={()=> setFilterActived("all")} >
@@ -49,7 +62,7 @@ function Home() {
       </S.FilterArea>
 
       <S.title>
-        <h3>Tarefas</h3>
+        <h3>{filterActived === 'late' ? 'TAREFAS ATRASADAS' : 'TAREFAS'}</h3>
       </S.title>
 
       <S.Content>
