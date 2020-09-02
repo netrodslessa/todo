@@ -5,7 +5,7 @@ export const Container = styled.div`
   height: 40px;
   background: ${props => props.actived ? '#EE6B26' : '#20295f'};
   border-radius: 5px;
-  padding: 10px;
+  padding: 8px;
   cursor: pointer;
   display: flex;
   
